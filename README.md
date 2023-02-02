@@ -48,6 +48,12 @@
    - 키가 눌렸을 때 keysDown\[ key \] = true
    - 키가 떼졌을 때 delete keysDown\[ key \] / keysUp\[ key \] = true
    - 한 프레임 후 delete keysUp\[ key \]
+> `Map`
+ - 플레이어가 이동할 수 있는 맵을 생성하기 위한 클래스
+ - 숫자로 이루어진 문자열 MapData에서 TileType에 알맞게 파싱하여 게임오브젝트를 생성한 뒤 2차원 배열 tileList에 넣는다
+ - main.js 스크립트에서의 objectList와 별개로 카메라에 넘겨주어 배경을 렌더링한다
+> `FollowingCamera`
+ - 플레이어가 카메라의 중앙에 올 수 있도록 카메라의 포지션을 플레이어의 위치에 배치한다
 
 <image src="ETC/input.gif"><image/>
 

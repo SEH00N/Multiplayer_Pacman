@@ -32,22 +32,27 @@ class GameObject {
 
         this.degree = 0;
 
-        this.scripts = [];
+        this.components = [];
     }
 
     update() {
-        this.scripts.forEach(script => {
-            script.update();
+        this.components.forEach(component => {
+            component.update();
         });
     }
 
-    addScript(script) {
-        this.scripts.push(script);
+    addComponent(component) {
+        this.components.push(component);
+    }
+
+    getComponent(componentTypeName) {
+        let foundedComponent = this.components.filter(x => typeof(x) == componentTypeName);
+        return foundedComponent[0];
     }
 }
 
 class Camera {
-    constructor(x, y, width, height, context) {
+    constructor(x, y, width, height, context, follow) {
         this.position = new Vector2(x, y);
         this.size = new Vector2(width, height);
 
@@ -60,17 +65,7 @@ class Camera {
         renderableObjects.forEach(obj => {
             let drawPos = new Vector2(obj.position.x - this.position.x, obj.position.y - this.position.y);
             
-            // this.context.drawImage(obj.sprite, drawPos.x, drawPos.y, obj.size.x, obj.size.y);
-            this.context.save();
-
-            this.context.setTransform(1, 0, 0, 1, 0, 0);
-            this.context.translate(drawPos.x + obj.size.x / 2, drawPos.y + obj.size.y / 2);
-
-            this.context.rotate(obj.degree * Math.PI / 180);
-
-            this.context.drawImage(obj.sprite, -(obj.size.x / 2), -(obj.size.y / 2), obj.size.x, obj.size.y);
-            
-            this.context.restore();
+            this.drawImageWithAngle(drawPos, obj.size, obj.degree * Math.PI / 180, obj.sprite);
         });
     }
 
@@ -91,6 +86,19 @@ class Camera {
         });
 
         return renderableObjects;
+    }
+
+    drawImageWithAngle(drawPos, objectSize, radian, sprite) {
+        this.context.save();
+
+        this.context.setTransform(1, 0, 0, 1, 0, 0);
+        this.context.translate(drawPos.x + objectSize.x / 2, drawPos.y + objectSize.y / 2);
+
+        this.context.rotate(radian);
+
+        this.context.drawImage(sprite, -(objectSize.x / 2), -(objectSize.y / 2), objectSize.x, objectSize.y);
+            
+        this.context.restore();
     }
 }
 
