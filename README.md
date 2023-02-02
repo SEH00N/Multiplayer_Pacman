@@ -17,6 +17,7 @@
    - 하단 범위 내부 : object.position.y < camera.position.y + camera.size.y;
  - renderableObjects에서 오브젝트들이 카메라 내부에 속한 위치에(오브젝트의 포지션 - 카메라의 포지션) 오브젝트 스프라이트 렌더링
 
+<h4>Camera</h4>
 <image src="ETC/camera.gif"><image/>
 
 <br/>
@@ -67,9 +68,9 @@
  - 배경 스프라이트 제작
    - base.png
 
-<h3>Input</h3>
+<h4>Input</h4>
 <image src="ETC/input.gif"></image>
-<h3>CameraFollowing</h3>
+<h4>CameraFollowing</h4>
 <image src="ETC/cameraFollowing.gif"></image>
 
 <br/>
