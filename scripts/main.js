@@ -20,7 +20,7 @@ document.body.appendChild(canvas);
 
 //#region object variables
 
-// let map = new Map();
+let map = new Map(32);
 
 let player = new GameObject(0, 200, 32, 32, loadImage('player'));
 player.addComponent(new PlayerMovement(player));
@@ -36,12 +36,16 @@ function update() {
     objectList.forEach(obj => obj.update());
 
     context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    
+    map.tileList.forEach(row => {
+        camera.doRendering(row);
+    });
+    
+    camera.doRendering(objectList);
 
     context.fillText(`camera position : (${camera.position.x}, ${camera.position.y})`, 140, 20);
     context.fillStyle = 'white';
     context.font = '20px Arial';
-
-    camera.doRendering(objectList, context);
 
     requestAnimationFrame(update);
 }

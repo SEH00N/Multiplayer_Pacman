@@ -64,7 +64,7 @@ class Camera {
         
         renderableObjects.forEach(obj => {
             let drawPos = new Vector2(obj.position.x - this.position.x, obj.position.y - this.position.y);
-            
+
             this.drawImageWithAngle(drawPos, obj.size, obj.degree * Math.PI / 180, obj.sprite);
         });
     }
@@ -122,7 +122,7 @@ class Input {
     }
 
     getKeyUp(keyName) {
-        return keyName in this.keysDown;
+        return keyName in this.keysUp;
     }
 
     setUpEventListenr() {

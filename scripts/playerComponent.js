@@ -5,7 +5,7 @@ class PlayerMovement {
         this.gameObject = gameObject;
 
         this.direction = new Vector2(1, 0);
-        this.speed = 1;
+        this.speed = 2;
 
         this.directions = {
             up : new Vector2(0, -1),
@@ -34,6 +34,11 @@ class PlayerMovement {
            targetDirCode = 'up';
         else if(this.input.getKeyDown('ArrowDown'))
             targetDirCode = 'down';
+
+        if(this.input.getKeyDown(' '))
+            this.speed = 0;
+        else if(this.input.getKeyUp(' '))
+            this.speed = 1;
 
         if(targetDirCode != '')
             this.changeDirection(targetDirCode);
