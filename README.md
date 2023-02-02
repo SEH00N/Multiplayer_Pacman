@@ -54,7 +54,22 @@
  - main.js 스크립트에서의 objectList와 별개로 카메라에 넘겨주어 배경을 렌더링한다
 > `FollowingCamera`
  - 플레이어가 카메라의 중앙에 올 수 있도록 카메라의 포지션을 플레이어의 위치에 배치한다
+> `스프라이트 제작`
+ - 장애물 스프라이트 제작
+   - obstacle_leftTop.png
+   - obstacle_left.png
+   - obstacle_leftBottom.png
+   - obstacle_top.png
+   - obstacle_bottom.png
+   - obstacle_rightTop.png
+   - obstacle_right.png
+   - obstacle_rightBottom.png
+ - 배경 스프라이트 제작
+   - base.png
 
-<image src="ETC/input.gif"><image/>
+<h3>Input</h3>
+<image src="ETC/input.gif"></image>
+<h3>CameraFollowing</h3>
+<image src="ETC/cameraFollowing.gif"></image>
 
 <br/>
