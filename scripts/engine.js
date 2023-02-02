@@ -106,7 +106,7 @@ class Input {
         this.keysDown = {};
         this.keysUp = {};
         
-        this.setUpEventListenr(document);
+        this.setUpEventListenr();
     }
 
     getKeyDown(keyName) {
