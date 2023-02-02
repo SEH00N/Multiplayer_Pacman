@@ -5,17 +5,15 @@ class Vector2 {
     }
 
     add(target) {
-        this.x += target.x;
-        this.y += target.y;
+        let addedVector = new Vector2(this.x + target.x, this.y + target.y);
 
-        return this;
+        return addedVector;
     }
 
     multiply(amount) {
-        this.x *= amount;
-        this.y *= amount;
+        let multipliedVector = new Vector2(this.x * amount, this.y * amount);
 
-        return this;
+        return multipliedVector;
     }
 
     compareValue(target) {
@@ -65,11 +63,12 @@ class Camera {
             // this.context.drawImage(obj.sprite, drawPos.x, drawPos.y, obj.size.x, obj.size.y);
             this.context.save();
 
-            this.context.translate(this.size.x, 0);
+            this.context.setTransform(1, 0, 0, 1, 0, 0);
+            this.context.translate(drawPos.x + obj.size.x / 2, drawPos.y + obj.size.y / 2);
+
             this.context.rotate(obj.degree * Math.PI / 180);
 
-            // this.context.drawImage(obj.sprite, drawPos.x - obj.size.x / 2, drawPos.y - obj.size.y / 2, obj.size.x, obj.size.y);
-            this.context.drawImage(obj.sprite, drawPos.x, drawPos.y, obj.size.x, obj.size.y);
+            this.context.drawImage(obj.sprite, -(obj.size.x / 2), -(obj.size.y / 2), obj.size.x, obj.size.y);
             
             this.context.restore();
         });
@@ -102,4 +101,41 @@ function loadImage(imgName) {
     return image;
 }
 
-export { Vector2, GameObject, Camera, loadImage };
+class Input {
+    constructor() {
+        this.keysDown = {};
+        this.keysUp = {};
+        
+        this.setUpEventListenr(document);
+    }
+
+    getKeyDown(keyName) {
+        return keyName in this.keysDown;
+    }
+
+    getKeyUp(keyName) {
+        return keyName in this.keysDown;
+    }
+
+    setUpEventListenr() {
+        document.addEventListener('keydown', e => {
+            if(e.key in this.keysDown == false) 
+                this.keysDown[e.key] = true;
+        });
+
+        document.addEventListener('keyup', e => {
+            if(e.key in this.keysDown)
+                delete this.keysDown[e.key];
+
+            if(e.key in this.keysUp == false)
+                this.keysUp[e.key] = true;
+
+            requestAnimationFrame(() => {
+                if(e.key in this.keysUp)
+                    delete this.keysUp[e.key]
+            });
+        });
+    }
+}
+
+export { Vector2, GameObject, Camera, Input, loadImage };

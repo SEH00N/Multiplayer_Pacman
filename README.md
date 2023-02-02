@@ -33,3 +33,22 @@
 > `각도에 따른 렌더링`
  - context를 선점하여 이의 각도를 돌린 후 그린 뒤 원래 상태로 돌려두는 방식
  - context를 원래 상태로 돌려두는 데에서 막힘 (context의 각도가 원래 상태로 돌아가지 않음)
+
+<br/>
+
+## 23-02-02
+> `각도에 따른 렌더링`
+ - 어제와는 다른 방식으로 접근
+ - context를 초기화 후 context의 포지션을 렌더링할 오브젝트의 포지션으로 설정과 동시에 오브젝트의 라디안 각도로 설정 (radian = degree * pie / 180)
+ - 그 상태에서 오브젝트 렌더링 후 context의 세팅을 롤백
+ - 위와 같은 방법으로 각도에 따른 렌더링 성공
+> `Input`
+ - 플레이어의 입력을 읽기 쉽도록 하기 위해 생성한 클래스
+ - 오브젝트 형태의 keysDown, keysUp 이 존재 
+   - 키가 눌렸을 때 keysDown\[ key \] = true
+   - 키가 떼졌을 때 delete keysDown\[ key \] / keysUp\[ key \] = true
+   - 한 프레임 후 delete keysUp\[ key \]
+
+<image src="ETC/input.gif"><image/>
+
+<br/>
