@@ -37,7 +37,8 @@ class GameObject {
 
     update() {
         this.components.forEach(component => {
-            component.update();
+            if(typeof(component.update) == 'function')
+                component.update();
         });
     }
 
@@ -45,8 +46,8 @@ class GameObject {
         this.components.push(component);
     }
 
-    getComponent(componentTypeName) {
-        let foundedComponent = this.components.filter(x => typeof(x) == componentTypeName);
+    getComponent(componentType) {
+        let foundedComponent = this.components.filter(x => componentType.prototype.isPrototypeOf(x));
         return foundedComponent[0];
     }
 }

@@ -1,10 +1,12 @@
 import { GameObject, Camera, loadImage, Input } from "./engine.js";
-import { CameraFollowing, PlayerMovement } from "./playerComponent.js";
+import { CameraFollowing, Player, PlayerCollision, PlayerMovement, PlayerWallet } from "./playerComponent.js";
 import { Map } from "./map.js";
 
 //#region project setting
 let canvas = document.createElement('canvas');
 let context = canvas.getContext('2d');
+// let coinText = document.createElement('p');
+// coinText.textContent = "asd";
 
 let objectList = [];
 let backgroundImage = loadImage('black');
@@ -14,19 +16,22 @@ let camera = new Camera(0, 0, 500, 500, context);
 canvas.width = camera.size.x;
 canvas.height = camera.size.y;
 
-document.body.appendChild(canvas);
+document.body.querySelector('#container').appendChild(canvas);
+// document.body.querySelector('#container > canvas').appendChild(coinText);
 //#endregion
-
 
 //#region object variables
 
-let map = new Map(32);
-
-let player = new GameObject(0, 200, 32, 32, loadImage('player'));
+let player = new GameObject(100, 200, 32, 32, loadImage('player'));
 player.addComponent(new PlayerMovement(player));
 player.addComponent(new CameraFollowing(camera, player));
+player.addComponent(new PlayerCollision(player));
+player.addComponent(new PlayerWallet());
+player.addComponent(new Player(player));
 
 objectList.push(player);
+
+let map = new Map(64, player);
 
 //#endregion
 
@@ -38,6 +43,7 @@ function update() {
     context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
     
     map.tileList.forEach(row => {
+        row.forEach(tile => tile.update());
         camera.doRendering(row);
     });
     

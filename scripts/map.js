@@ -1,4 +1,5 @@
 import { GameObject, Vector2, loadImage } from "./engine.js";
+import { PlayerCollision } from "./playerComponent.js";
 
 const TileType = {
     0: 'base',
@@ -47,14 +48,14 @@ const MapData =
     '35555555555555555555555555555558';
 
 class Map {
-    constructor(tileSize) {
+    constructor(tileSize, player) {
         this.size = new Vector2(0, 0);
         this.tileList = [];
 
-        this.createTiles(tileSize)
+        this.createTiles(tileSize, player)
     }
 
-    createTiles(tileSize) {
+    createTiles(tileSize, player) {
         let mapData = MapData.split('\n');
         this.size.x = mapData[0].length;
         this.size.y = mapData.length;
@@ -68,9 +69,45 @@ class Map {
 
                 let tileType = mapData[y][x];
 
-                this.tileList[y][x] = new GameObject(xPos, yPos, tileSize, tileSize, loadImage(TileType[tileType]));
+                let tile = new GameObject(xPos, yPos, tileSize, tileSize, loadImage(TileType[tileType]));
+                if(tileType != 0)
+                    tile.addComponent(new Collider(tile, player, 'Obstacle'));
+
+                this.tileList[y][x] = tile;
             }
         }
+    }
+}
+
+class Collider {
+    constructor(gameObject, player, name) {
+        this.gameObject = gameObject;
+        this.player = player;
+
+        this.name = name;
+
+        this.playerCollision = player.getComponent(PlayerCollision);
+    }
+
+    //나중에 델리게이트 형식으로 바꿀 예정
+    //Obstacle은 충돌 감지만 하고 충돌했을 때 이벤트를 델리게이트에 쌓을 예정정
+    update() {
+        if(this.checkCollision())
+            this.onCollision();
+    }
+    
+    checkCollision() {
+        let rangeL = this.player.position.x + this.player.size.x > this.gameObject.position.x;
+        let rangeR = this.player.position.x < this.gameObject.position.x + this.gameObject.size.x;
+
+        let rangeT = this.player.position.y + this.player.size.y > this.gameObject.position.y;
+        let rangeB = this.player.position.y < this.gameObject.position.y + this.gameObject.size.y;
+
+        return rangeL && rangeR && rangeT && rangeB;
+    }
+
+    onCollision() {
+        this.playerCollision.onCollision(this.name);
     }
 }
 
