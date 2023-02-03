@@ -1,4 +1,5 @@
 import { Vector2, Input, GameObject } from "./engine.js";
+import { CoinTile } from "./map.js";
 
 class Player {
     constructor(gameObject) {
@@ -24,7 +25,7 @@ class PlayerMovement {
 
         this.direction = new Vector2(1, 0);
         this.directionCode = 'right';
-        this.speed = 5;
+        this.speed = 0;
 
         this.directions = {
             up: new Vector2(0, -1),
@@ -99,13 +100,16 @@ class PlayerCollision {
     }
 
     onCollision(other) {
-        if(other == 'Obstacle') {
+        if(other.name == 'Obstacle') {
             if(this.untouchable) return;
             
             this.changeDirection();
             this.movementRestriction();
-        } else if(other == 'Coin') {
-
+        } else if(other.name == 'Coin') {
+            let coinTile = other.gameObject.getComponent(CoinTile);
+            coinTile.onAdded();
+            
+            this.player.playerWallet.addCoin();
         }
     }
     
@@ -132,31 +136,32 @@ class PlayerCollision {
         this.player.playerWallet.splitInHalfCoin(); 
     }
 
-    movementRestriction() {
+    async movementRestriction() {
         this.untouchable = true;
 
         this.twinkle(2);
-        let breakInterval = setInterval(() => {
+
+        await this.setDelay(this.breakTime * 1000).then(() => {
             this.untouchable = false;
-            clearInterval(breakInterval);
-        }, this.breakTime * 1000);
+        });
     }
     
-    twinkle(twinkleCount) {
-        console.log(this.untouchable);
+    async twinkle(twinkleCount) {
         if(twinkleCount <= 0) return;
 
         this.player.gameObject.size = new Vector2(0, 0);
 
-        let disappearInterval = setInterval(() => {
+        await this.setDelay(0.2 * 1000).then(async () => {
             this.player.gameObject.size = this.defaultSize;
-            clearInterval(disappearInterval);
 
-            let appearInterval = setInterval(() => {
+            await this.setDelay(0.2 * 1000).then(() => {
                 this.twinkle(--twinkleCount);
-                clearInterval(appearInterval);
-            }, 0.2 * 1000);
-        }, 0.2 * 1000);
+            });
+        });
+    }
+    
+    setDelay(time) {
+        return new Promise(r => setTimeout(r, time));
     }
 }
 
@@ -183,7 +188,6 @@ class PlayerWallet {
         }
 
         this.setCoinText();
-        console.log(this.coin);
     }
 
     setCoinText() {

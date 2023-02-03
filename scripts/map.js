@@ -72,10 +72,52 @@ class Map {
                 let tile = new GameObject(xPos, yPos, tileSize, tileSize, loadImage(TileType[tileType]));
                 if(tileType != 0)
                     tile.addComponent(new Collider(tile, player, 'Obstacle'));
+                else 
+                    tile.addComponent(new CoinTile(5, player, tile));
 
                 this.tileList[y][x] = tile;
             }
         }
+    }
+}
+
+class CoinTile {
+    constructor(spawnDelay, player, gameObject) {
+        this.player = player;
+        this.gameObject = gameObject;
+        this.spawnDelay = spawnDelay * 1000;
+
+        this.coinSprite = loadImage('coin');
+        this.baseSprite = loadImage('base');
+
+        this.spawnCoin(0);
+
+        this.collider = new Collider(gameObject, player, 'Coin');
+        this.collider.setActive(false);
+    }
+
+    update() {
+        this.collider.update();
+    }
+
+    async spawnCoin(delay) {
+        await this.setDelay(delay).then(() => {
+            if(this.collider.active == false) {
+                this.collider.setActive(true);
+                this.gameObject.sprite = this.coinSprite;
+            }
+        });
+    }
+
+    onAdded() {
+        this.gameObject.sprite = this.baseSprite;
+        this.collider.setActive(false);
+
+        this.spawnCoin(this.spawnDelay);
+    }
+
+    setDelay(time) {
+        return new Promise(r => setTimeout(r, time));
     }
 }
 
@@ -85,15 +127,21 @@ class Collider {
         this.player = player;
 
         this.name = name;
+        this.active = true;
 
         this.playerCollision = player.getComponent(PlayerCollision);
+    }
+
+    setActive(active) {
+        this.active = active;
     }
 
     //나중에 델리게이트 형식으로 바꿀 예정
     //Obstacle은 충돌 감지만 하고 충돌했을 때 이벤트를 델리게이트에 쌓을 예정정
     update() {
-        if(this.checkCollision())
-            this.onCollision();
+        if(this.active)
+            if(this.checkCollision())
+                this.onCollision();
     }
     
     checkCollision() {
@@ -107,8 +155,8 @@ class Collider {
     }
 
     onCollision() {
-        this.playerCollision.onCollision(this.name);
+        this.playerCollision.onCollision(this);
     }
 }
 
-export { Map };
+export { Map, CoinTile };
