@@ -11,7 +11,7 @@ let coinText = document.querySelector('#CoinText');
 let objectList = [];
 let backgroundImage = loadImage('black');
 
-let camera = new Camera(0, 0, 500, 500, context);
+let camera = new Camera(0, 0, 1800, 850, context);
 
 canvas.width = camera.size.x;
 canvas.height = camera.size.y;
@@ -21,7 +21,7 @@ document.body.querySelector('#container').appendChild(canvas);
 
 //#region object variables
 
-let player = new GameObject(100, 200, 32, 32, loadImage('player'));
+let player = new GameObject(70, 300, 32, 32, loadImage('player'));
 player.addComponent(new PlayerMovement(player));
 player.addComponent(new CameraFollowing(camera, player));
 player.addComponent(new PlayerCollision(player));

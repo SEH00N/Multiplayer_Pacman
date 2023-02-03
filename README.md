@@ -89,3 +89,5 @@
 > `PlayerWallet`
  - 플레이어의 코인을 관리하는 스크립트
  - 벽에 닿을 때 코인이 절반으로 떨어지고 코인이 0이 되면 사망
+
+<image src="ETC/obstacle&wallet.gif"></image>
