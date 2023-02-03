@@ -94,4 +94,4 @@
  - Collider를 변수로 갖고 있으며 코인이 플레이어에 의해 사라진 후 5초 뒤 Collider의 액티브를 켜주며 오브젝트의 스프라이트를 코인으로 바꾼다
 
 <image src="ETC/obstacle&wallet.gif"></image>
-<image src="ETC/coin"></image>
+<image src="ETC/coin.gif"></image>
