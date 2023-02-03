@@ -129,6 +129,7 @@ class PlayerCollision {
 
         this.player.playerMovement.changeDirection(targetDirCode);
         this.player.playerMovement.move();
+        this.player.playerWallet.splitInHalfCoin(); 
     }
 
     movementRestriction() {
@@ -160,14 +161,18 @@ class PlayerCollision {
 }
 
 class PlayerWallet {
-    constructor() {
-        this.player = null;
+    constructor(coinText) {
+        this.coinText = coinText;
 
-        this.coin = 0;
+        this.coin = 10;
+
+        this.setCoinText();
     }
 
     addCoin() {
         this.coin ++;
+
+        this.setCoinText();
     }
 
     splitInHalfCoin() {
@@ -176,6 +181,13 @@ class PlayerWallet {
         if(this.coin <= 0) {
             
         }
+
+        this.setCoinText();
+        console.log(this.coin);
+    }
+
+    setCoinText() {
+        this.coinText.textContent = `COIN : ${this.coin}`;
     }
 }
 

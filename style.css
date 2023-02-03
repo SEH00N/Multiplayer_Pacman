@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position:relative;
 }
 
 #container > canvas {
@@ -18,4 +19,16 @@
     flex-grow: 1;
     font-size: 72px;
     color: rgb(255, 255, 255);
+}
+
+#container > #MessageBox {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    transform: translateX(-50%);
+}
+
+#container > #MessageBox > #CoinText {
+    color: #fff;
+
 }

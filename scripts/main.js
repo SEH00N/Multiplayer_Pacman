@@ -5,8 +5,8 @@ import { Map } from "./map.js";
 //#region project setting
 let canvas = document.createElement('canvas');
 let context = canvas.getContext('2d');
-// let coinText = document.createElement('p');
-// coinText.textContent = "asd";
+
+let coinText = document.querySelector('#CoinText');
 
 let objectList = [];
 let backgroundImage = loadImage('black');
@@ -17,7 +17,6 @@ canvas.width = camera.size.x;
 canvas.height = camera.size.y;
 
 document.body.querySelector('#container').appendChild(canvas);
-// document.body.querySelector('#container > canvas').appendChild(coinText);
 //#endregion
 
 //#region object variables
@@ -26,7 +25,7 @@ let player = new GameObject(100, 200, 32, 32, loadImage('player'));
 player.addComponent(new PlayerMovement(player));
 player.addComponent(new CameraFollowing(camera, player));
 player.addComponent(new PlayerCollision(player));
-player.addComponent(new PlayerWallet());
+player.addComponent(new PlayerWallet(coinText));
 player.addComponent(new Player(player));
 
 objectList.push(player);
