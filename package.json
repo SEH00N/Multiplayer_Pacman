@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/SEH00N/Multiplayer_Pacman/issues"
   },
-  "homepage": "https://github.com/SEH00N/Multiplayer_Pacman#readme"
+  "homepage": "https://github.com/SEH00N/Multiplayer_Pacman#readme",
+  "dependencies": {
+    "ws": "^8.12.0"
+  },
+  "type": "module"
 }
