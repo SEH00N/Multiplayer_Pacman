@@ -21,7 +21,6 @@ server.on('connection', (socket) => {
         }
         
         packets.forEach(packet => {
-            console.log(packet);
         });
     });
 });
