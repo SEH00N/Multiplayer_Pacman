@@ -1,4 +1,5 @@
 import { WebSocketServer } from 'ws';
+import { Handler } from './handlers.js';
 import { Action, Observer, parseData, Singleton } from './module.js';
 
 let packetQueue = [];
@@ -7,6 +8,8 @@ let onUpdate = new Action();
 
 let singleton = new Singleton();
 singleton.packetStream = packetStream;
+
+let handler = new Handler();
 
 const server = new WebSocketServer({ port: 8081 });
 
@@ -20,7 +23,8 @@ server.on('connection', (socket) => {
     socket.on('message', msg => {
         while(msg.length > 0) {
             let length = msg[0];
-            packetQueue.push(parseData(msg.slice(1, length)));
+            let packet = parseData(msg.slice(1, length));
+            packetQueue.push(packet);
 
             msg = msg.slice(length);
         }
@@ -38,7 +42,7 @@ onUpdate.addListener(() => {
 async function update() {
     onUpdate.invoke();
 
-    await new Promise(r => setTimeout(1/20 * 1000)).then(() => {
+    await new Promise(r => setTimeout(r, 1/20 * 1000)).then(() => {
         update();
     });
 }
