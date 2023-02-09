@@ -1,5 +1,12 @@
 import { WebSocketServer } from 'ws';
-import { parseData } from './packet.js';
+import { Action, Observer, parseData, Singleton } from './module.js';
+
+let packetQueue = [];
+let packetStream = new Observer();
+let onUpdate = new Action();
+
+let singleton = new Singleton();
+singleton.packetStream = packetStream;
 
 const server = new WebSocketServer({ port: 8081 });
 
@@ -9,18 +16,29 @@ server.once('listening', () => {
 
 server.on('connection', (socket) => {
     console.log('\x1b[33m%s\x1b[0m', `[NetworkManager] client connected`);
-    
-    socket.on('message', msg => {
-        let packets = [];
 
+    socket.on('message', msg => {
         while(msg.length > 0) {
             let length = msg[0];
-            packets.push(parseData(msg.slice(1, length)));
-            
+            packetQueue.push(parseData(msg.slice(1, length)));
+
             msg = msg.slice(length);
         }
-        
-        packets.forEach(packet => {
-        });
     });
 });
+
+update();
+
+onUpdate.addListener(() => {
+    while(packetQueue.length > 0) {
+        packetStream.send(packetQueue.shift());
+    }
+});
+
+async function update() {
+    onUpdate.invoke();
+
+    await new Promise(r => setTimeout(1/20 * 1000)).then(() => {
+        update();
+    });
+}
