@@ -1,5 +1,17 @@
 let textEncoder = new TextEncoder();
 
+class Singleton {
+    /** @type {Singleton} */
+    static Instance;
+
+    constructor() {
+        if(Singleton.Instance == null) 
+            Singleton.Instance = this;
+
+        return Singleton.Instance;
+    }
+}
+
 class Action {
     constructor() {
         this.actionList = [];
@@ -62,4 +74,4 @@ function parseData(rawData) {
     return new Packet(type, event, data);
 }
 
-export { Action, Observer, Packet, parseData };
+export { Action, Observer, Packet, Singleton, parseData };

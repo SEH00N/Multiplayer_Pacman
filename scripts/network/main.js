@@ -1,12 +1,18 @@
 import { WebSocketServer } from 'ws';
-import { Handler } from './handlers.js';
-import { Action, Observer, parseData } from './module.js';
+import { Handler } from './handler.js';
+import { Action, Observer, parseData, Singleton } from './module.js';
 
 let packetQueue = [];
 let packetStream = new Observer();
 let onUpdate = new Action();
 
-let handler = new Handler(packetStream);
+let handler = new Handler();
+handler.init(packetStream);
+
+let playerList = {};
+
+let singleton = new Singleton();
+singleton.playerList = playerList;
 
 const server = new WebSocketServer({ port: 8081 });
 
@@ -18,24 +24,14 @@ server.on('connection', (socket) => {
     console.log('\x1b[33m%s\x1b[0m', `[NetworkManager] client connected`);
 
     socket.on('message', msg => {
-        console.log("raw data");
-        console.log(msg);
-        console.log('');
-
         while(msg.length > 0) {
-            console.log("parsed raw data");
-            console.log(msg.slice(0, msg[0]));
-            console.log('');
             let length = msg[0];
             let packet = parseData(msg.slice(1, length));
+            packet.socket = socket;
             packetQueue.push(packet);
 
             msg = msg.slice(length);
         }
-
-        console.log('parsed packet');
-        console.log(packetQueue);
-        console.log('');
     });
 });
 

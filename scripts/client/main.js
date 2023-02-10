@@ -1,6 +1,7 @@
 import { GameObject, Camera, loadImage, Input } from "./engine.js";
 import { CameraFollowing, Player, PlayerCollision, PlayerMovement, PlayerWallet } from "./playerComponent.js";
 import { Map } from "./map.js";
+import { NetworkManager } from "./networkManager.js";
 
 //#region project setting
 let canvas = document.createElement('canvas');
@@ -17,6 +18,9 @@ canvas.width = camera.size.x;
 canvas.height = camera.size.y;
 
 document.body.querySelector('#container').appendChild(canvas);
+
+let networkManager = new NetworkManager();
+networkManager.objectList = objectList;
 //#endregion
 
 //#region object variables
@@ -37,20 +41,22 @@ let map = new Map(64, player);
 update();
 
 function update() {
-    objectList.forEach(obj => obj.update());
-
-    context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    if(networkManager.onStart) {
+        objectList.forEach(obj => obj.update());
     
-    map.tileList.forEach(row => {
-        row.forEach(tile => tile.update());
-        camera.doRendering(row);
-    });
+        context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+        
+        map.tileList.forEach(row => {
+            row.forEach(tile => tile.update());
+            camera.doRendering(row);
+        });
+        
+        camera.doRendering(objectList);
     
-    camera.doRendering(objectList);
-
-    context.fillText(`camera position : (${camera.position.x}, ${camera.position.y})`, 140, 20);
-    context.fillStyle = 'white';
-    context.font = '20px Arial';
+        context.fillText(`camera position : (${camera.position.x}, ${camera.position.y})`, 140, 20);
+        context.fillStyle = 'white';
+        context.font = '20px Arial';
+    }
 
     requestAnimationFrame(update);
 }

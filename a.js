@@ -1,5 +1,6 @@
 // import { WebSocket } from "ws";
-// import { Packet } from "./scripts/network/packet.js";
+import { Packet } from "./scripts/network/module.js";
+import { Vector2 } from "./scripts/client/engine.js";
 
 // const server = new WebSocket('ws://localhost:8081/ws');
 
@@ -60,3 +61,6 @@
 // let arr = [1, 2, 3];
 // console.log(arr.shift());
 // console.log(arr);
+
+let packet = new Packet(0, 1, JSON.stringify(new Vector2(10, 20)));
+console.log(packet.toByte());

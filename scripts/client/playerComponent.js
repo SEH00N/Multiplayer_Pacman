@@ -1,14 +1,35 @@
+import { GameEvent, Type } from "../network/enum.js";
+import { Packet } from "../network/module.js";
 import { Vector2, Input, GameObject } from "./engine.js";
 import { CoinTile } from "./map.js";
+import { NetworkManager } from "./networkManager.js";
 
 class Player {
     constructor(gameObject) {
         this.gameObject = gameObject;
 
+        this.lastPos = this.gameObject.position;
+
         this.playerMovement = this.setComponentVariable(PlayerMovement);
         this.playerCollision = this.setComponentVariable(PlayerCollision); 
         this.cameraFollowing = this.setComponentVariable(CameraFollowing);
         this.playerWallet = this.setComponentVariable(PlayerWallet);
+
+        NetworkManager.Instance.sendingSubscribe(this.sendData);
+    }
+
+    sendData() {
+        let able2Sending = arguments[0];
+
+        if(able2Sending == false || able2Sending == undefined) return;
+
+        if(this.lastPos.compareValue(this.gameObject.position)) {
+            this.lastPos.x = this.gameObject.position.x;
+            this.lastPos.y = this.gameObject.position.y;
+            let packet = new Packet(Type.game, GameEvent.move, JSON.stringify(this.lastPos));
+
+            NetworkManager.Instance.sendRequest(packet);
+        }
     }
 
     setComponentVariable(type) {
@@ -25,6 +46,8 @@ class PlayerMovement {
 
         this.direction = new Vector2(1, 0);
         this.directionCode = 'right';
+        this.lastDirectionCode = this.directionCode;
+        
         this.speed = 0;
 
         this.directions = {
@@ -36,6 +59,21 @@ class PlayerMovement {
         this.input = new Input();
 
         this.gameObject.degree = 90;
+
+        NetworkManager.Instance.sendingSubscribe(this.sendData);
+    }
+
+    sendData() {
+        let able2Sending = arguments[0];
+
+        if(able2Sending == false || able2Sending == undefined) return;
+
+        if(this.lastDirectionCode != this.directionCode) {
+            this.lastDirectionCode = this.directionCode;
+            let packet = new Packet(Type.game, GameEvent.direction, this.lastDirectionCode);
+
+            NetworkManager.Instance.sendRequest(packet);
+        }
     }
 
     update() {
