@@ -52,15 +52,13 @@ class Packet {
     }
 
     toByte() {
-        let byteArray = new Array(this.data.length + 3);
+        let length = this.data.length + 3;
+        let byteArray = [];
 
-        byteArray[0] = byteArray.length;
+        byteArray[0] = length;
         byteArray[1] = this.type;
         byteArray[2] = this.event;
-        let arrayData = Array.from(textEncoder.encode(this.data));
-        console.log(arrayData);
-        byteArray.concat(arrayData);
-        console.log(byteArray);
+        byteArray = byteArray.concat(Array.from(textEncoder.encode(this.data)));
 
         return byteArray;
     }
@@ -70,7 +68,6 @@ function parseData(rawData) {
     let type = rawData[0];
     let event = rawData[1];
     let data =  rawData.slice(2).toString();
-    console.log(Array.from(rawData.slice(2)));
 
     return new Packet(type, event, data);
 }

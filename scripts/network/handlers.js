@@ -9,7 +9,6 @@ class Handler {
 
     packetHandling() {
         let packet = arguments[0];
-        
         console.log(packet);
     }
 }
