@@ -1,15 +1,15 @@
-import { Singleton } from "./module.js";
-
-let singleton = new Singleton();
+let handlers = [];
 
 class Handler {
-    constructor() {
-        singleton.packetStream.subscribe(this.packetHandling);
+    constructor(packetStream) {
+        packetStream.subscribe(this.packetHandling);
     }
 
     packetHandling() {
         let packet = arguments[0];
+        console.log('packet to handling');
         console.log(packet);
+        console.log('');
     }
 }
 

@@ -1,15 +1,5 @@
 let textEncoder = new TextEncoder();
 
-class Singleton {
-    static instance;
-
-    constructor() {
-        if(Singleton.instance != null) return Singleton.instance;
-
-        Singleton.instance = this;
-    }
-}
-
 class Action {
     constructor() {
         this.actionList = [];
@@ -72,4 +62,4 @@ function parseData(rawData) {
     return new Packet(type, event, data);
 }
 
-export { Singleton, Action, Observer, Packet, parseData };
+export { Action, Observer, Packet, parseData };

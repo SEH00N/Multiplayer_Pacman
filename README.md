@@ -127,3 +127,6 @@
    - 그 후에 데이터의 바이트 배열을 위 배열과 concat
  - 문제점
    - concat을 하고 값을 안 담음!!
+> `데이터 파싱 완료`
+
+<image src="ETC/dataParsing.gif"></image>
