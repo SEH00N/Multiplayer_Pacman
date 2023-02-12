@@ -1,6 +1,9 @@
 import { WebSocketServer } from 'ws';
+import Express from 'express';
+import { createServer } from 'http';
 import { Handler } from './handler.js';
 import { Action, Observer, parseData, Singleton } from './module.js';
+import path from 'path';
 
 let packetQueue = [];
 let packetStream = new Observer();
@@ -14,16 +17,29 @@ let playerList = {};
 let singleton = new Singleton();
 singleton.playerList = playerList;
 
-const server = new WebSocketServer({ port: 8081 });
+const __dirname = path.resolve();
+const app = Express();
 
-server.once('listening', () => {
-    console.log('\x1b[33m%s\x1b[0m', `[NetworkManager] server opened on port ${server.options.port}`);
+app.use(Express.static("public"));
+app.use('/', function(req, res) {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-server.on('connection', (socket) => {
+const expressServer = createServer(app).listen(8081, function() {
+    console.log('\x1b[33m%s\x1b[0m', `[NetworkManager] Express server listening`);
+});
+
+const wsServer = new WebSocketServer({ server: expressServer });
+
+wsServer.once('listening', () => {
+    console.log('\x1b[33m%s\x1b[0m', `[NetworkManager] server opened on port ${wsServer.options.server.address().port}`);
+});
+
+wsServer.on('connection', (socket) => {
     console.log('\x1b[33m%s\x1b[0m', `[NetworkManager] client connected`);
 
     socket.on('message', msg => {
+        console.log(msg.toString());
         while(msg.length > 0) {
             let length = msg[0];
             let packet = parseData(msg.slice(1, length));

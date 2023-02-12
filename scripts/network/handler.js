@@ -10,6 +10,7 @@ class Handler {
 
     packetHandling() {
         let packet = arguments[0];
+        console.log(packet);
 
         let callback = handlers[packet.type][packet.event];
         if(typeof(callback) == 'function')

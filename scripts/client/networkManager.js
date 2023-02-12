@@ -1,4 +1,3 @@
-import { WebSocket } from 'ws';
 import { LoginEvent, Type } from "../network/enum.js";
 import { Action, Observer, Packet } from "../network/module.js";
 import { Handler } from "./handler.js";
@@ -50,11 +49,11 @@ class NetworkManager {
     }
 
     serverInit() {
-        this.socket.once('open', () => {
-            this.socket.send(new Packet(Type.login, LoginEvent.join, '').toByte());
-        });
+        this.socket.onopen = () => {
+            this.socket.send(new Packet(Type.login, LoginEvent.join, 'asd').toByte());
+        }
 
-        this.socket.on('message', msg => {
+        this.socket.onmessage = e => {
             while(msg.length > 0) {
                 let length = msg[0];
                 let packet = parseData(msg.slice(1, length));
@@ -62,7 +61,7 @@ class NetworkManager {
     
                 msg = msg.slice(length);
             }
-        });
+        }
     }
 
     sendRequest(packet) {
