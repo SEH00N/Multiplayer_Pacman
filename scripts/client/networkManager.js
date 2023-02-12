@@ -1,4 +1,5 @@
-import { WebSocket } from "ws";
+import { WebSocket } from 'ws';
+// const ws = require('./ws');
 import { LoginEvent, Type } from "../network/enum.js";
 import { Action, Observer, Packet } from "../network/module.js";
 import { Handler } from "./handler.js";
@@ -10,7 +11,8 @@ class NetworkManager {
     constructor() {
         if(NetworkManager.Instance == null) 
         {
-            this.server = new WebSocket('ws://localhost:8081/ws');
+            this.socket = new WebSocket('ws://localhost:8081/ws');
+            // this.server = new ws.WebSocket('ws://localhost:8081/ws')
     
             this.resPacketQueue = [];
             this.reqPacketQueue = [];
@@ -40,7 +42,7 @@ class NetworkManager {
         this.onUpdate = new Action();
         this.onUpdate.addListener(() => {
             this.sendStream.send(true);
-            this.server.send(this.reqPacketQueue);
+            this.socket.send(this.reqPacketQueue);
 
             while(this.resPacketQueue.length > 0) {
                 let packet = this.resPacketQueue.shift();
@@ -50,11 +52,11 @@ class NetworkManager {
     }
 
     serverInit() {
-        this.server.once('open', () => {
-            this.server.send(new Packet(Type.login, LoginEvent.join, '').toByte());
+        this.socket.once('open', () => {
+            this.socket.send(new Packet(Type.login, LoginEvent.join, '').toByte());
         });
 
-        this.server.on('message', msg => {
+        this.socket.on('message', msg => {
             while(msg.length > 0) {
                 let length = msg[0];
                 let packet = parseData(msg.slice(1, length));

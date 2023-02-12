@@ -22,3 +22,8 @@ handlers[LoginEvent.join] = function(packet) {
         networkManager.playerList[playerId] = otherPlayer;
     });
 };
+
+handlers[LoginEvent.otherConnect] = function(packet) {
+    let id = packet.data;
+    networkManager.playerList[id] = new GameObject(0, 0, 32, 32, loadImage('player'));
+};
