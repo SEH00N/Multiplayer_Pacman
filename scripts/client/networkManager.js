@@ -1,5 +1,4 @@
 import { WebSocket } from 'ws';
-// const ws = require('./ws');
 import { LoginEvent, Type } from "../network/enum.js";
 import { Action, Observer, Packet } from "../network/module.js";
 import { Handler } from "./handler.js";
@@ -12,7 +11,6 @@ class NetworkManager {
         if(NetworkManager.Instance == null) 
         {
             this.socket = new WebSocket('ws://localhost:8081/ws');
-            // this.server = new ws.WebSocket('ws://localhost:8081/ws')
     
             this.resPacketQueue = [];
             this.reqPacketQueue = [];
