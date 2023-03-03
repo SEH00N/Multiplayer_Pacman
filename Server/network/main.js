@@ -39,15 +39,16 @@ wsServer.on('connection', (socket) => {
     console.log('\x1b[33m%s\x1b[0m', `[NetworkManager] client connected`);
 
     socket.on('message', msg => {
-        console.log(msg.toString());
-        while(msg.length > 0) {
-            let length = msg[0];
-            let packet = parseData(msg.slice(1, length));
-            packet.socket = socket;
-            packetQueue.push(packet);
-
-            msg = msg.slice(length);
-        }
+        // let msgg = msg.toString();
+        // let parse = `[${msgg}]`;
+        // let obj = JSON.parse(parse);
+        // console.log(obj)
+        let obj = Array.from(msg);
+        console.log(obj);
+        let length = obj[0];
+        let packet = parseData(obj.slice(1, length));
+        packet.socket = socket;
+        packetQueue.push(packet);
     });
 });
 

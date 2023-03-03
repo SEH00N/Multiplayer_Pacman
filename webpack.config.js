@@ -5,7 +5,7 @@ module.exports = {
     mode: 'production',
     entry: './scripts/client/main.js',
     output: {
-        path: path.resolve(__dirname, 'public', 'dist'),
+        path: path.resolve(__dirname,'Server', 'public', 'dist'),
         filename: 'main.js',
     },
     

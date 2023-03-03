@@ -1,7 +1,14 @@
+import { Type } from "./enum.js";
+import { loginHandlers } from "./loginHandler.js";
+
 let handlers = [];
+
+handlers[Type.login] = loginHandlers;
+// handlers[Type.game] = gameHandlers; <- 이제 이걸 만들어야 됨 ^^ 화이팅!
 
 class Handler {
     constructor() {
+        
     }
     
     init(packetStream) {
@@ -10,7 +17,8 @@ class Handler {
 
     packetHandling() {
         let packet = arguments[0];
-        console.log(packet);
+        // console.log(packet);
+        console.log(`[Handler] type: ${packet.type}, event: ${packet.event}`);
 
         let callback = handlers[packet.type][packet.event];
         if(typeof(callback) == 'function')

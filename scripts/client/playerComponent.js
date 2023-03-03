@@ -1,5 +1,5 @@
-import { GameEvent, Type } from "../network/enum.js";
-import { Packet } from "../network/module.js";
+import { GameEvent, Type } from "../../Server/network/enum.js";
+import { Packet } from "../../Server/network/module.js";
 import { Vector2, Input, GameObject } from "./engine.js";
 import { CoinTile } from "./map.js";
 import { NetworkManager } from "./networkManager.js";

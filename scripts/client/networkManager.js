@@ -1,5 +1,5 @@
-import { LoginEvent, Type } from "../network/enum.js";
-import { Action, Observer, Packet } from "../network/module.js";
+import { LoginEvent, Type } from "../../Server/network/enum.js";
+import { Action, Observer, Packet } from "../../Server/network/module.js";
 import { Handler } from "./handler.js";
 
 class NetworkManager {
@@ -50,7 +50,10 @@ class NetworkManager {
 
     serverInit() {
         this.socket.onopen = () => {
-            this.socket.send(new Packet(Type.login, LoginEvent.join, 'asd').toByte());
+            let packet = new Packet(Type.login, LoginEvent.join, 'asd');
+            console.log("send");
+            console.log(packet.toByte());
+            this.socket.send(packet.toByte());
         }
 
         this.socket.onmessage = e => {

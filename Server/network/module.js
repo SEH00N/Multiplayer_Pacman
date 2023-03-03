@@ -1,3 +1,5 @@
+import { raw } from "express";
+
 let textEncoder = new TextEncoder();
 
 class Singleton {
@@ -66,12 +68,20 @@ class Packet {
     }
 }
 
+/**
+ * 
+ * @param {number[]} rawData 
+ * @returns 
+ */
 function parseData(rawData) {
+    rawData = Buffer.from(rawData);
     let type = rawData[0];
     let event = rawData[1];
-    let data =  rawData.slice(2).toString();
-
-    return new Packet(type, event, data);
+    let data =  rawData.slice(2).toString('utf8');
+    console.log(rawData);
+    let p = new Packet(type, event, data);
+    console.log(p);
+    return p;
 }
 
 export { Action, Observer, Packet, Singleton, parseData };
