@@ -1,4 +1,4 @@
-import { LoginEvent } from "../network/enum";
+import { LoginEvent } from "../../Server/network/enum";
 import { GameObject, loadImage } from "./engine";
 import { NetworkManager } from "./networkManager";
 

@@ -2,11 +2,11 @@ import { Type, LoginEvent } from './enum.js';
 import { Packet, Singleton } from './module.js';
 import { Player } from './entity.js';
 
-let handlers = [];
+let loginHandlers = [];
 
 let singleton = new Singleton();
 
-handlers[LoginEvent.join] = function(packet) {
+loginHandlers[LoginEvent.join] = function(packet) {
     let id = '';
 
     do id = Math.random().toString(36).substring(2, 11).toUpperCase();
@@ -28,3 +28,5 @@ handlers[LoginEvent.join] = function(packet) {
     packet.data = id + JSON.stringify(playerList);
     singleton.playerList.socket.send(packet.toByte());
 };
+
+export { loginHandlers }

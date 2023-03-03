@@ -1,9 +1,9 @@
-import { Vector2 } from '../client/engine.js';
+import { Vector2 } from "./engine.js";
 
 class Player {
     constructor(socket) {
         this.socket = socket;
-        this.position = new Vector2(0, 0);
+        this.position = new Vector2
     }
 }
 

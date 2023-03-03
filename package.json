@@ -1,7 +1,6 @@
 {
   "name": "multiplayer_pacman",
   "version": "1.0.0",
-  "type": "module",
   "description": "> `동아리 홍보를 위한 멀티플레이어 팩맨 게임`",
   "main": "index.js",
   "scripts": {
