@@ -18,7 +18,7 @@
  - renderableObjects에서 오브젝트들이 카메라 내부에 속한 위치에(오브젝트의 포지션 - 카메라의 포지션) 오브젝트 스프라이트 렌더링
 
 <h4>Camera</h4>
-<image src="ETC/camera.gif"><image/>
+<image src="Packman이었던 것/ETC/camera.gif"><image/>
 
 <br/>
 
@@ -69,9 +69,9 @@
    - base.png
 
 <h4>Input</h4>
-<image src="ETC/input.gif"></image>
+<image src="Packman이었던 것/ETC/input.gif"></image>
 <h4>CameraFollowing</h4>
-<image src="ETC/cameraFollowing.gif"></image>
+<image src="Packman이었던 것/ETC/cameraFollowing.gif"></image>
 
 <br/>
 
@@ -93,8 +93,8 @@
  - 코인을 생성하는 타일
  - Collider를 변수로 갖고 있으며 코인이 플레이어에 의해 사라진 후 5초 뒤 Collider의 액티브를 켜주며 오브젝트의 스프라이트를 코인으로 바꾼다
 
-<image src="ETC/obstacle&wallet.gif"></image>
-<image src="ETC/coin.gif"></image>
+<image src="Packman이었던 것/ETC/obstacle&wallet.gif"></image>
+<image src="Packman이었던 것/ETC/coin.gif"></image>
 
 <br/>
 
@@ -129,7 +129,7 @@
    - concat을 하고 값을 안 담음!!
 > `데이터 파싱 완료`
 
-<image src="ETC/dataParsing.gif"></image>
+<image src="Packman이었던 것/ETC/dataParsing.gif"></image>
 
 > `핸들러 구조 짜기`
  - handlers \[ 타입 \] \[ 이벤트 \] = handler();
@@ -159,3 +159,16 @@
    - 익스프레스 서버를 열어 ws서버에 물려서 해결함
  - 클라이언트가 접속하면 3,0,0이라는 메세지가 옴
    - 뭐가 문제..?
+
+<br/>
+
+## 23-03-03
+> `re:zero`
+ - 아무런 지식도 없이 HTML로 물리엔진이 필요한 멀티플레이 게임을 도전하고 많이 부족하다는 걸 느낌
+ - 서버 내에서 물리엔진 구현하는 것에서 js의 숙련도, ws의 숙련도 서버에 대한 지식 부족으로 벽을 느끼고 번아웃이 옴
+ - 욕심 없이 난이도를 낮추고 완성하는 것을 목적으로 하는 게임을 제작하기로 함
+ - 멀티플레이어 팩맨에서 두들 점프 레이싱 버전으로 프로젝트 변경
+
+<br/>
+
+<image src="DoodleJump/ETC/unnamed.webp"><image>

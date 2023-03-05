@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/06.%20UI/style.uss?fileID=7433441132597879392&amp;guid=6d3fc99a38a104f4caa14631099ef489&amp;type=3#style" />
+    <ui:VisualElement name="container">
+        <ui:VisualElement name="contentBox" style="align-items: center; justify-content: space-around;">
+            <ui:VisualElement name="nicknamePanel">
+                <ui:Label text="닉네임을 입력하세요" display-tooltip-when-elided="true" name="nicknameLabel" style="color: rgba(0, 0, 0, 255); -unity-text-align: middle-center; font-size: 32px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="submitPanel" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
