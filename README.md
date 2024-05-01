@@ -18,7 +18,7 @@
  - renderableObjects에서 오브젝트들이 카메라 내부에 속한 위치에(오브젝트의 포지션 - 카메라의 포지션) 오브젝트 스프라이트 렌더링
 
 <h4>Camera</h4>
-<image src="Packman이었던 것/ETC/camera.gif"><image/>
+<image src="ETC/camera.gif"><image/>
 
 <br/>
 
@@ -69,9 +69,9 @@
    - base.png
 
 <h4>Input</h4>
-<image src="Packman이었던 것/ETC/input.gif"></image>
+<image src="ETC/input.gif"></image>
 <h4>CameraFollowing</h4>
-<image src="Packman이었던 것/ETC/cameraFollowing.gif"></image>
+<image src="ETC/cameraFollowing.gif"></image>
 
 <br/>
 
@@ -93,8 +93,8 @@
  - 코인을 생성하는 타일
  - Collider를 변수로 갖고 있으며 코인이 플레이어에 의해 사라진 후 5초 뒤 Collider의 액티브를 켜주며 오브젝트의 스프라이트를 코인으로 바꾼다
 
-<image src="Packman이었던 것/ETC/obstacle&wallet.gif"></image>
-<image src="Packman이었던 것/ETC/coin.gif"></image>
+<image src="ETC/obstacle&wallet.gif"></image>
+<image src="ETC/coin.gif"></image>
 
 <br/>
 
@@ -129,7 +129,7 @@
    - concat을 하고 값을 안 담음!!
 > `데이터 파싱 완료`
 
-<image src="Packman이었던 것/ETC/dataParsing.gif"></image>
+<image src="ETC/dataParsing.gif"></image>
 
 > `핸들러 구조 짜기`
  - handlers \[ 타입 \] \[ 이벤트 \] = handler();
